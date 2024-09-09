@@ -6,6 +6,7 @@ import {input} from '../ts/Head'
 
 <template>
  <div class="head-layout"> 
+    
     <el-button @click="toggleDarkMode">切换黑暗模式</el-button>
 
     <el-input
@@ -16,9 +17,9 @@ import {input} from '../ts/Head'
     clearable
     />
 
-    <div class="test">用户头像</div>
+    <div class="test">登录</div>
  
-
+    
  </div>
 </template>
 

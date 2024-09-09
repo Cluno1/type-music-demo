@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import {isCollapse,handleClose,handleOpen,selected} from '../ts/Aside'
+import {RouterLink } from 'vue-router'
 
 </script>
 
@@ -26,8 +27,8 @@ import {isCollapse,handleClose,handleOpen,selected} from '../ts/Aside'
       </template>
       <el-menu-item-group>
         <!-- <template #title><span>Group One</span></template> -->
-        <el-menu-item index="explore" >探索</el-menu-item>
-        <el-menu-item index="find">发现</el-menu-item>
+        <el-menu-item index="explore" ><RouterLink to="/explore">探索</RouterLink></el-menu-item>
+        <el-menu-item index="find"><RouterLink to="/find">发现</RouterLink></el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     <el-sub-menu index="user">
