@@ -6,7 +6,7 @@ const router = createRouter({
       {
         path: '/explore',
         name: 'explore',
-        alias:["/"],
+        
         component:  () => import("../components/home/Explore.vue"),
         children:[
           {
@@ -20,7 +20,7 @@ const router = createRouter({
             component:  () => import("../components/home/explore/Rank.vue"),
           },
           {
-            path: '/song-list',
+            path: '/songList',
             name: 'song-list',
             component:  () => import("../components/home/explore/SongList.vue"),
           },
@@ -41,7 +41,27 @@ const router = createRouter({
         path: '/find',
         name: 'find',
         component: ()=> import('../components/home/Find.vue')
-      }
+      },
+      {
+        path: '/userMessage',
+        name: 'userMessage',
+        component: ()=> import('../components/user/UserMessage.vue')
+      },
+      {
+        path: '/dataAnalyze',
+        name: 'dataAnalyze',
+        component: ()=> import('../components/user/DataAnalyze.vue')
+      },
+      {
+        path: '/login',
+        name: 'login',
+        component: ()=> import('../components/user/Login.vue')
+      },
+      {
+        path: '/sign',
+        name: 'sign',
+        component: ()=> import('../components/user/Sign.vue')
+      },
       
      
      

@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import router from '../router';
 
 const isCollapse = ref(true)
 const handleOpen = (key: string, keyPath: string[]) => {
@@ -10,8 +11,8 @@ const handleClose = (key: string, keyPath: string[]) => {
 
 //选中菜单触发的回调
 const selected = (index, indexPath) => {
-    alert(index+';'+indexPath)   // 1;1 拿到下标
-    
+    // alert(index+';'+indexPath)   // 1;1 拿到下标
+    router.push(`/${index}`)
     
     
 }

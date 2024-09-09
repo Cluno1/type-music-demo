@@ -8,6 +8,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 //全局定义css
 import './css/style.css'
+import './css/style.scss'
+
 import App from './App.vue'
 
 let app=createApp(App)

@@ -1,0 +1,6 @@
+
+
+1. vue生命周期，引用pinia 时不能在setup顶层直接调用函数（初始化），而应该在函数里面或onMonted后
+2. 黑暗模式 全局的颜色管理
+3. router路由问题 
+4. index.html 不能使用scss

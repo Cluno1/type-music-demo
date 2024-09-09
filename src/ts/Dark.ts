@@ -1,11 +1,14 @@
 
 import { ref } from 'vue';
-const isDarkMode = ref(false);
+
+
+
 //切换黑暗模式
-function toggleDarkMode() {
-  isDarkMode.value = !isDarkMode.value;
+function toggleDarkMode(store) {
+  
+  store.dark=!store.dark
   const htmlElement = document.documentElement;
-  if (isDarkMode.value) {
+  if (store.dark) {
     htmlElement.classList.add('dark');
     htmlElement.setAttribute('data-theme', 'dark');
   } else {
@@ -13,4 +16,6 @@ function toggleDarkMode() {
     htmlElement.classList.remove('dark');
   }
 }
+
+
 export {toggleDarkMode,isDarkMode}

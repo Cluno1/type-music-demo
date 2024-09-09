@@ -3,8 +3,7 @@
 </script>
 
 <template>
-    
-   
+    <div> 个人数据分析</div>
  
 </template>
 

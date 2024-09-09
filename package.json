@@ -18,8 +18,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
+    "css-loader": "^7.1.2",
+    "sass": "^1.78.0",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
+    "vue-loader": "^17.4.2",
     "vue-tsc": "^2.0.29"
   }
 }

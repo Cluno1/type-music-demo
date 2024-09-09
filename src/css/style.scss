@@ -1,0 +1,122 @@
+
+
+// 定义断点
+$breakpoint-sm: 576px; // 小屏幕，如手机
+$breakpoint-md: 768px; // 中等屏幕，如平板
+$breakpoint-lg: 992px; // 大屏幕，如电脑
+
+// 创建混合宏
+@mixin respond-to($size) {
+  @if $size == 'phone' {
+    @media ( max-width: $breakpoint-sm  -  1px ) { @content; }
+  } @else if $size == 'tablet' {
+    @media ( min-width: $breakpoint-sm ) and ( max-width: $breakpoint-md - 1px ) { @content; }
+  } @else if $size == 'desktop' {
+    @media ( min-width: $breakpoint-lg ) { @content; }
+  }
+}
+
+// 使用混合宏
+.example {
+  background-color: red;
+
+  // 手机
+  @include respond-to('phone') {
+    background-color: blue;
+  }
+
+  // 平板
+  @include respond-to('tablet') {
+    background-color: green;
+  }
+
+  // 电脑
+  @include respond-to('desktop') {
+    background-color: purple;
+  }
+}
+
+
+//App.vue
+.app-layout{
+  /* background-color: #484e5b; //组件的黑暗色彩非常不错 */
+  // background-color: #f3bfe3;
+  min-height: 97vh;
+}
+
+// Head.vue
+.head-layout{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex: 1,1,6rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+
+  .head-layout-left{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap:3rem;
+      .head-layout-left-web-name{
+          width: max-content;
+      }
+  }
+
+  .head-layout-middle{
+      display: flex;
+      gap:1rem;
+      align-items: center;
+
+
+      
+  }
+
+  .head-layout-right{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      .head-layout-right-layout{
+          display: flex;
+          width: max-content;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+      }
+  }
+
+  // 手机
+  @include respond-to('phone') {
+    justify-content: center;
+    .head-layout-left{
+      
+      
+      .head-layout-left-web-name{
+          display: none;
+      }
+    }
+    
+    
+  }
+  
+}
+
+
+//Explore.vue
+.explore-layout{
+  display: flex;
+  flex-direction: column;
+  .explore-layout-head{
+      display: flex;
+      gap: 1rem;
+      // 手机
+    @include respond-to('phone') {
+      gap:0;
+    }
+  }
+
+}
+
+
