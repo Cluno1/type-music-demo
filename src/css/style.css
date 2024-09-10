@@ -1,21 +1,6 @@
 
 
-:root {
 
-   /* 默认组件的主题颜色 */
-  --el-color-primary: #4b7eeb;
-  /* 定义组件背景颜色 */
-  --el-bg-color: #fafafa;
-  
-}
-
-/* 其他地方使用：root里面的可以：var(--el-color-primary) 可以保持颜色等一致 */
-
-[data-theme='dark']{
-  color: rgb(255, 255, 255);
- 
-  
-}
 
 
 
