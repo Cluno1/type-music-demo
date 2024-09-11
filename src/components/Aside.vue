@@ -17,8 +17,7 @@ const screenStore=useScreenStore()
     <el-radio-button :value="false" v-if="isCollapse" ><el-icon><Expand /></el-icon></el-radio-button>
     <el-radio-button :value="true" v-if="!isCollapse"><el-icon><Fold /></el-icon></el-radio-button>
 </el-radio-group>
-
-  <el-menu
+    <el-menu
     default-active="explore"
     :collapse="isCollapse"
     @select="selected"
@@ -60,9 +59,13 @@ const screenStore=useScreenStore()
       <template #title>设置</template>
     </el-menu-item>
   </el-menu>
+
+  
  
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+
+
 
 </style>

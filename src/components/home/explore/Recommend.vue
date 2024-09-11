@@ -20,13 +20,10 @@ import{useBoxStore} from '../../../../stores/boxStore'
         box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png'])
         box.boxStart(box)
     })
-
-
-   
 </script>
 
 <template>
-    <div class="recommend-layout"> 
+    <div class="recommend-layout "> 
         <div class="recommend-layout-song-show-box show-box"> 
             <div class="box-button"> 
                 <div class="box-left"> 
@@ -54,7 +51,73 @@ import{useBoxStore} from '../../../../stores/boxStore'
             </div>
             
         </div>
-        <div class="recommend-layout-song-middle"> 
+        
+        <div class="recommend-layout-song-middle "> 
+
+            <span>歌曲<el-icon><DArrowRight /></el-icon></span>
+            <el-divider ></el-divider>
+            <div class="recommend-layout-song-grid grid-layout"> 
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=1'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=2'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=3'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=4'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/320?random=5'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/370/420?random=6'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/520?random=7'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/310?random=8'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/310?random=9'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/310?random=10'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=1'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=2'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=3'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/420?random=4'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/320?random=5'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/370/420?random=6'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/360/520?random=7'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/310?random=8'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/310?random=9'>
+                </div>
+                <div class="recommend-layout-song-grid-item grid-layout-item">
+                    <img src='https://picsum.photos/460/310?random=10'>
+                </div>
+            </div>
 
         </div>
         

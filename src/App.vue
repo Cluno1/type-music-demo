@@ -71,14 +71,19 @@ let drawer=ref(true)
         <Head/>
       </el-header>
       <el-container>
-        <el-aside width="11rem">
-          <Aside/>
+        <el-aside width="10rem">
+          <div class="aside-box"> 
+            <Aside />
+          </div>
+            
+          
+          
         </el-aside>
         <el-main ><Main/></el-main>
       </el-container>
     </el-container>
 
-
+    
 
 </div>
 
@@ -87,4 +92,10 @@ let drawer=ref(true)
 
 <style scoped lang="scss">
   
+  .aside-box{
+    position: fixed;
+    top: 6rem;
+    left: 0rem;
+    z-index: 20;
+  }
 </style>

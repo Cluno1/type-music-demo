@@ -3,14 +3,14 @@
 // 定义断点
 $breakpoint-sm: 576px; // 小屏幕，如手机
 $breakpoint-md: 768px; // 中等屏幕，如平板
-$breakpoint-lg: 992px; // 大屏幕，如电脑
+$breakpoint-lg: 1024px; // 大屏幕，如电脑
 
 // 创建混合宏
 @mixin respond-to($size) {
   @if $size == 'phone' {
-    @media ( max-width: $breakpoint-sm  -  1px ) { @content; }
+    @media  ( max-width: $breakpoint-md  -  1px ) { @content; }
   } @else if $size == 'tablet' {
-    @media ( min-width: $breakpoint-sm ) and ( max-width: $breakpoint-md - 1px ) { @content; }
+    @media ( min-width: $breakpoint-md ) and ( max-width: $breakpoint-lg - 1px ) { @content; }
   } @else if $size == 'desktop' {
     @media ( min-width: $breakpoint-lg ) { @content; }
   }
@@ -203,26 +203,102 @@ $breakpoint-lg: 992px; // 大屏幕，如电脑
   }
 }
 
-//Recommend.vue
-.recommend-layout-song-show-box{
-  background-color: #ffffff40;
-  // 手机
-  @include respond-to('phone') {
-    width: 21rem;
-    height: 12rem;
+/**
+*  网格模型
+*/
+.grid-layout{
+  display: grid;
+  // background-color: #c97d7d;
+  gap: 1rem;
+  row-gap: 1rem;
+  
+
+  .grid-layout-item{
+    
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #a2eebf20;
+    border-radius: 1rem;
+ 
+    // overflow: scroll;
+    img {
+      border-radius: 1rem;
+      object-fit:fill;
+    }
+
   }
-  // 平板
-  @include respond-to('tablet') {
-    width: 28rem;
-    height: 16rem;
-  }
-  width: 35rem;
-  height: 20rem;
-  
-  
-  
-  
-  
 }
+
+
+
+//Recommend.vue
+.recommend-layout{
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  .recommend-layout-song-show-box{
+    background-color: #ffffff40;
+    // 手机
+    @include respond-to('phone') {
+      width: 17rem;
+      height: 12rem;
+    }
+    // 平板
+    @include respond-to('tablet') {
+      width: 25rem;
+      height: 16rem;
+    }
+    width: 45rem;
+    height: 30rem;
+  }
+  .recommend-layout-song-middle{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    span{
+      display: flex;
+      align-items: center;
+      justify-content: start;
+    }
+    .recommend-layout-song-grid{
+      width: 100%;
+      height: auto;
+      @include respond-to('phone') {
+        grid-template-columns: repeat(auto-fill,minmax(6rem,1fr)); 
+      }
+      @include respond-to('tablet') {
+        grid-template-columns: repeat(auto-fill,minmax(8rem,1fr)); 
+      }
+      @include respond-to('desktop') {
+      grid-template-columns: repeat(auto-fill,minmax(17rem,1fr)); 
+      }
+      .recommend-layout-song-grid-item{
+        // 手机
+       @include respond-to('phone') {
+          width: 6rem;
+          height: 10rem;
+        }
+
+        // 平板
+        @include respond-to('tablet') {
+          width: 8rem;
+          height: 16rem;
+          
+        }
+        @include respond-to('desktop'){
+          width: 17rem;
+          height: 27rem;
+        }
+        
+        img{
+          width: 100%;
+          height: 70%;       
+        }
+      }
+    }
+  }
+}
+
 
 

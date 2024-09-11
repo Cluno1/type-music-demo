@@ -39,6 +39,7 @@ const darkStore=useDarkStore()
       position: fixed;
       border-radius: 50%;
       filter: blur(190px);
+      z-index: -10;
     }
     .background-color:nth-child(1){
       left: 10rem;
