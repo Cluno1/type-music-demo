@@ -16,7 +16,7 @@ import{useBoxStore} from '../../../../stores/boxStore'
         boxPointers=document.querySelectorAll('.box-pointer')
         boxLeft=document.querySelector('.box-left')
         boxRight=document.querySelector('.box-right')
-        box=boxStore.initBox(2000,6000,boxItems,boxContainer,boxPointers,boxLeft,boxRight);
+        box=boxStore.initBox(3000,6000,boxItems,boxContainer,boxPointers,boxLeft,boxRight);
         box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png'])
         box.boxStart(box)
     })

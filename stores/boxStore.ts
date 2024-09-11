@@ -10,7 +10,7 @@ export const useBoxStore = defineStore('box', () => {
     time:{
         routineTime:number,
         occurTime:number,
-        isClick:boolean
+        click: number
     },
     boxItems:Array<HTMLElement>,
     boxContainer:HTMLElement,
@@ -44,29 +44,85 @@ export const useBoxStore = defineStore('box', () => {
           return 'right'
       }
     },
-    boxChange(changeIndex:number|null=null){
-      if(this.time.isClick)
-        this.time.isClick=false
-      else{
-        if(changeIndex===null){
-           if(this.direction=='right')
+    boxChange(changeType:'left'|'right'|'pointer'|null=null,changeIndex:number|null=null){
+      
+      switch(changeType){
+        case null:
+          if(!this.time.click){
+            if(this.direction=='right')
               this.direction=this.boxAdd()
             else
               this.direction=this.boxDesc()
-           setTimeout(() => {
-               this.boxChange()
-           }, this.time.routineTime);
-        }else{
-          this.index=changeIndex
-          this.time.isClick=true;
-          
+
+            this.boxContainer.style.left= (this.index)*(-100) +'%'
+            setTimeout(() => {
+                this.boxChange()
+            }, this.time.routineTime);
+          }else{
+            this.time.click--
+            if(!this.time.click)
+              this.boxContainer.style.transition='all 0.5s'
+          }
+          break;
+        case 'left':
+            this.direction= this.boxDesc()
+            if(!this.time.click)
+              this.boxContainer.style.transition='all 0s'
+            this.boxContainer.style.left= (this.index)*(-100) +'%'
+            this.time.click++
             setTimeout(() => {
               this.boxChange()
-              }, this.time.occurTime
-            );
-        }
-        this.boxContainer.style.left= (this.index)*(-100) +'%';
+            }, this.time.occurTime);
+            break;
+        case 'right':
+            this.direction= this.boxAdd()
+            if(!this.time.click)
+              this.boxContainer.style.transition='all 0s'
+            this.boxContainer.style.left= (this.index)*(-100) +'%'
+            this.time.click++
+            setTimeout(() => {
+              this.boxChange()
+            }, this.time.occurTime);
+            break;
+        case 'pointer':
+            this.index=changeIndex
+            if(!this.time.click)
+              this.boxContainer.style.transition='all 0s'
+            this.boxContainer.style.left= (this.index)*(-100) +'%'
+            this.time.click++
+            setTimeout(() => {
+              this.boxChange()
+            }, this.time.occurTime);
+            break;
+
+
       }
+      
+      // if(this.time.click>0){
+      //     this.time.click--
+      //     this.boxContainer.style.transition='all 0.5s'
+      // }
+        
+      // else{
+      //   if(changeIndex===null){
+      //      if(this.direction=='right')
+      //         this.direction=this.boxAdd()
+      //       else
+      //         this.direction=this.boxDesc()
+      //      setTimeout(() => {
+      //          this.boxChange()
+      //      }, this.time.routineTime);
+      //   }else{
+      //     this.index=changeIndex
+      //     this.time.isClick=true;
+          
+      //       setTimeout(() => {
+      //         this.boxChange()
+      //         }, this.time.occurTime
+      //       );
+      //   }
+      //   this.boxContainer.style.left= (this.index)*(-100) +'%';
+      // }
     },
     addUrl(array:Array<String>){
       
@@ -99,7 +155,7 @@ export const useBoxStore = defineStore('box', () => {
       time:{
           routineTime:routineTime,
           occurTime,
-          isClick:false
+          click:0
       },
       boxItems,
       boxContainer,
@@ -115,23 +171,27 @@ export const useBoxStore = defineStore('box', () => {
 
     boxPointers.forEach((element,eleIndex) => {
       element.addEventListener('click',()=>{
-          box1.boxChange(eleIndex)       
+          boxContainer.style.transition="all 0s"
+          box1.boxChange('pointer',eleIndex)       
       })
     });
 
     boxLeft?.addEventListener('click',()=>{
-      if(!box1.time.isClick){
-        box1.direction= box1.boxDesc()
-        box1.boxChange(box1.index)
-      }
-         
+      // if(!box1.time.click){
+      //   // boxContainer.style.transition="all 0s"
+      //   // box1.direction= box1.boxDesc()
+      //   box1.boxChange(box1.index)
+      // }
+      box1.boxChange('left')
     })
 
     boxRight?.addEventListener('click',()=>{
-        if(!box1.time.isClick){
-          box1.direction= box1.boxAdd()
-          box1.boxChange(box1.index)
-        }
+        // if(!box1.time.isClick){
+        //   boxContainer.style.transition="all 0s"
+        //   box1.direction= box1.boxAdd()
+        //   box1.boxChange(box1.index)
+        // }
+        box1.boxChange('right')
     })
 
     boxes.data.push(box1);

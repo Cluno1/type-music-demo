@@ -2,7 +2,7 @@
 // defineProps<{ msg: string }>()  暴露attribute
 
 
-import { onMounted, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useDarkStore } from '../stores/dark';
 import { useScreenStore } from '../stores/screenStore';
 import Aside from './components/Aside.vue';
@@ -53,15 +53,13 @@ function handleChange(){
 
 
 watch(()=>darkStore.dark,(newVal)=>{
-  if(newVal){
-    
+  if(newVal)
     htmlLayout.style.backgroundColor='#484e5b'
-  }else{
-    
+  else   
     htmlLayout.style.backgroundColor='#f3bfe3'
-  }
 })
 
+let drawer=ref(true)
 
 </script>
 
@@ -78,9 +76,11 @@ watch(()=>darkStore.dark,(newVal)=>{
         </el-aside>
         <el-main ><Main/></el-main>
       </el-container>
-      
     </el-container>
-  </div>
+
+
+
+</div>
 
 
 </template>
