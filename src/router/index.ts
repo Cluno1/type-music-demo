@@ -6,7 +6,7 @@ const router = createRouter({
       {
         path: '/explore',
         name: 'explore',
-        
+        alias:'/',
         component:  () => import("../components/home/Explore.vue"),
         children:[
           {

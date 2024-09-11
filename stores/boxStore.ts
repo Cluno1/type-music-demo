@@ -19,7 +19,7 @@ export const useBoxStore = defineStore('box', () => {
     boxLeft:HTMLElement
   }
 
-  //基础盒子-仅仅提供函数
+  //盒子原型-仅仅提供函数
   let boxBase={
     boxStart(box:box){
       setTimeout(() => {
@@ -67,44 +67,28 @@ export const useBoxStore = defineStore('box', () => {
         }
         this.boxContainer.style.left= (this.index)*(-100) +'%';
       }
+    },
+    addUrl(array:Array<String>){
+      
+        let length=array.length
+        let arrayIndex=0
+        this.boxItems.forEach((element,index) => {
+            if(arrayIndex<length){
+              element.style.backgroundImage=`url(${array[arrayIndex]})`
+              
+            }else{
+              element.style.backgroundImage=`url('/src/assets/pictureHolder/${arrayIndex%3}.png')`
+
+            }
+              arrayIndex++
+              
+
+
+        });
+
     }
   }
 
-//   function boxAdd(index,length){
-//     if(index<length-1){
-//         index++
-//         return 'right'
-//     }else{
-//         index--
-//         return 'left'
-//     }
-// }
-
-// function boxDesc(index,length){
-//     if(index>0){
-//         index--
-//         return 'left'
-//     }else{
-//         index++
-//         return 'right'
-//     }
-// }
-
-// function boxChange(){
-//   if(box.time.isClick)
-//     box.time.isClick=false
-//   else{
-//        if(box.dirction=='right')
-//           box.dirction=boxAdd()
-//         else
-//           box.dirction=boxDesc()
-       
-//        boxContainer.style.left= (index)*(-100) +'%';
-//        setTimeout(() => {
-//            boxChange()
-//        }, time.routineTime);
-//   }
-// }
 
 
   //添加监听和创建盒子
@@ -131,24 +115,14 @@ export const useBoxStore = defineStore('box', () => {
 
     boxPointers.forEach((element,eleIndex) => {
       element.addEventListener('click',()=>{
-        // if(!box1.time.isClick){
-          // box1.index=eleIndex
-          box1.boxChange(eleIndex)
-        
-        // }
-        
+          box1.boxChange(eleIndex)       
       })
     });
 
     boxLeft?.addEventListener('click',()=>{
       if(!box1.time.isClick){
-        // box1.time.isClick=true
         box1.direction= box1.boxDesc()
         box1.boxChange(box1.index)
-        // box1.boxContainer.style.left= (box1.index)*(-100) +'%';
-        //   setTimeout(() => {
-        //   boxChange()
-        //   }, box1.time.occurTime);
       }
          
     })
@@ -157,10 +131,6 @@ export const useBoxStore = defineStore('box', () => {
         if(!box1.time.isClick){
           box1.direction= box1.boxAdd()
           box1.boxChange(box1.index)
-          // box1.boxContainer.style.left= (box1.index)*(-100) +'%';
-          //   setTimeout(() => {
-          //   boxChange()
-          //   }, box1.time.occurTime);
         }
     })
 
