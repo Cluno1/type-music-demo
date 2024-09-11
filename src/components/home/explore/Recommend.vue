@@ -2,7 +2,7 @@
 import { onMounted } from 'vue';
 import{useBoxStore} from '../../../../stores/boxStore'
 
-    let boxImgs=null;
+    let boxItems=null;
     let  boxContainer=null;
     let boxPointers=null;
     let boxRight=null;
@@ -11,12 +11,12 @@ import{useBoxStore} from '../../../../stores/boxStore'
     let box=null;
 
     onMounted(()=>{
-        boxImgs=document.querySelectorAll('.box-imgs')
+        boxItems=document.querySelectorAll('.box-item')
         boxContainer=document.querySelector('.box-container')
         boxPointers=document.querySelectorAll('.box-pointer')
         boxLeft=document.querySelector('.box-left')
         boxRight=document.querySelector('.box-right')
-        box=boxStore.initBox(2000,6000,boxImgs,boxContainer,boxPointers,boxLeft,boxRight);
+        box=boxStore.initBox(2000,6000,boxItems,boxContainer,boxPointers,boxLeft,boxRight);
         box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png'])
         box.boxStart(box)
     })
@@ -27,7 +27,7 @@ import{useBoxStore} from '../../../../stores/boxStore'
 
 <template>
     <div class="recommend-layout"> 
-        <div class="recommend-layout-song-show-box"> 
+        <div class="recommend-layout-song-show-box show-box"> 
             <div class="box-button"> 
                 <div class="box-left"> 
                     <el-icon><ArrowLeft /></el-icon>
@@ -38,11 +38,11 @@ import{useBoxStore} from '../../../../stores/boxStore'
             </div>
             
             <div class="box-container"> 
-                <div class="box-imgs">111</div>
-                <div class="box-imgs">22</div>
-                <div class="box-imgs">33</div>
-                <div class="box-imgs">44</div>
-                <div class="box-imgs">55</div>
+                <div class="box-item">111</div>
+                <div class="box-item">22</div>
+                <div class="box-item">33</div>
+                <div class="box-item">44</div>
+                <div class="box-item">55</div>
             </div>
 
             <div  class="box-pointers">
@@ -52,10 +52,6 @@ import{useBoxStore} from '../../../../stores/boxStore'
                 <span class="box-pointer"></span>
                 <span class="box-pointer"></span>
             </div>
-            
-            
-
-            
             
         </div>
         <div class="recommend-layout-song-middle"> 
