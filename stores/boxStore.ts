@@ -97,32 +97,7 @@ export const useBoxStore = defineStore('box', () => {
 
 
       }
-      
-      // if(this.time.click>0){
-      //     this.time.click--
-      //     this.boxContainer.style.transition='all 0.5s'
-      // }
-        
-      // else{
-      //   if(changeIndex===null){
-      //      if(this.direction=='right')
-      //         this.direction=this.boxAdd()
-      //       else
-      //         this.direction=this.boxDesc()
-      //      setTimeout(() => {
-      //          this.boxChange()
-      //      }, this.time.routineTime);
-      //   }else{
-      //     this.index=changeIndex
-      //     this.time.isClick=true;
-          
-      //       setTimeout(() => {
-      //         this.boxChange()
-      //         }, this.time.occurTime
-      //       );
-      //   }
-      //   this.boxContainer.style.left= (this.index)*(-100) +'%';
-      // }
+
     },
     addUrl(array:Array<String>){
       

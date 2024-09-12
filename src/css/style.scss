@@ -218,7 +218,6 @@ $breakpoint-lg: 1024px; // 大屏幕，如电脑
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background-color: #a2eebf20;
     border-radius: 1rem;
  
     // overflow: scroll;
@@ -227,6 +226,9 @@ $breakpoint-lg: 1024px; // 大屏幕，如电脑
       object-fit:fill;
     }
 
+  }
+  .grid-layout-item:hover{
+    background-color: #a2eebf1f;
   }
 }
 
@@ -249,8 +251,10 @@ $breakpoint-lg: 1024px; // 大屏幕，如电脑
       width: 25rem;
       height: 16rem;
     }
-    width: 45rem;
-    height: 30rem;
+    @include respond-to('desktop') {
+      width: 45rem;
+      height: 30rem;
+    }
   }
   .recommend-layout-song-middle{
     display: flex;
@@ -294,6 +298,15 @@ $breakpoint-lg: 1024px; // 大屏幕，如电脑
         img{
           width: 100%;
           height: 70%;       
+        }
+
+        .recommend-layout-song-grid-item-songMessage{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-self: center;
+          padding: 0.6rem;
+          gap: 0.6rem;
         }
       }
     }

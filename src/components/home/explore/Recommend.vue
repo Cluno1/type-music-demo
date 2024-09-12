@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import{useBoxStore} from '../../../../stores/boxStore'
-
+import{useGridBoxStore} from '../../../../stores/gridBoxStore'
+    //推荐-歌曲-盒子
     let boxItems=null;
-    let  boxContainer=null;
+    let boxContainer=null;
     let boxPointers=null;
     let boxRight=null;
     let boxLeft=null
+
+
     let boxStore=useBoxStore()
     let box=null;
+    
+    let gridBoxStore=useGridBoxStore()
+    let gridBox=null
+    
+    
 
     onMounted(()=>{
         boxItems=document.querySelectorAll('.box-item')
@@ -19,6 +27,24 @@ import{useBoxStore} from '../../../../stores/boxStore'
         box=boxStore.initBox(3000,6000,boxItems,boxContainer,boxPointers,boxLeft,boxRight);
         box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png'])
         box.boxStart(box)
+
+        gridBox=gridBoxStore.initBox(
+            document.querySelectorAll('.song-name'),
+            document.querySelectorAll('.song-singer'),
+            document.querySelectorAll('.song-signature'),
+            document.querySelectorAll('.song-submit-time'),
+            document.querySelectorAll('.recommend-layout-song-grid-item-img')
+        );
+
+        let {songNames,
+            songSingers,
+            songSignatures,
+            songSubmitTimes,
+            songImgs} =gridBoxStore.test(20)
+        gridBox.gridBoxAddMessage(songNames,songSingers,songSignatures,songSubmitTimes,songImgs)
+
+
+
     })
 </script>
 
@@ -35,11 +61,11 @@ import{useBoxStore} from '../../../../stores/boxStore'
             </div>
             
             <div class="box-container"> 
-                <div class="box-item">111</div>
-                <div class="box-item">22</div>
-                <div class="box-item">33</div>
-                <div class="box-item">44</div>
-                <div class="box-item">55</div>
+                <div class="box-item"></div>
+                <div class="box-item"></div>
+                <div class="box-item"></div>
+                <div class="box-item"></div>
+                <div class="box-item"></div>
             </div>
 
             <div  class="box-pointers">
@@ -58,64 +84,205 @@ import{useBoxStore} from '../../../../stores/boxStore'
             <el-divider ></el-divider>
             <div class="recommend-layout-song-grid grid-layout"> 
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=1'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name">我是如此相信</div> 
+                            <div class="song-singer"> --陈奕迅 </div>
+                            <div class="song-signature"> 人生一世，静静听歌</div>
+                            <div class="song-submit-time"> 2024/9/12</div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=2'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=3'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
+                    
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=4'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/320?random=5'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/370/420?random=6'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/520?random=7'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/310?random=8'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/310?random=9'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/310?random=10'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=1'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=2'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=3'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/420?random=4'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/320?random=5'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/370/420?random=6'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/360/520?random=7'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/310?random=8'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/310?random=9'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
                 <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img src='https://picsum.photos/460/310?random=10'>
+                    <img class="recommend-layout-song-grid-item-img">
+                    <div class="recommend-layout-song-grid-item-songMessage"> 
+                            <div class="song-name"></div> 
+                            <div class="song-singer"> </div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"> </div>
+                            
+                    </div>
                 </div>
             </div>
 
