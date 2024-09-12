@@ -14,7 +14,8 @@ import{useGridBoxStore} from '../../../../stores/gridBoxStore'
     let box=null;
     
     let gridBoxStore=useGridBoxStore()
-    let gridBox=null
+    let gridSongBox=null
+    let gridSongListBox=null
     
     
 
@@ -25,15 +26,24 @@ import{useGridBoxStore} from '../../../../stores/gridBoxStore'
         boxLeft=document.querySelector('.box-left')
         boxRight=document.querySelector('.box-right')
         box=boxStore.initBox(3000,6000,boxItems,boxContainer,boxPointers,boxLeft,boxRight);
-        box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png'])
+        box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png','https://picsum.photos/420/360?random=30','https://picsum.photos/420/360?random=90'])
         box.boxStart(box)
 
-        gridBox=gridBoxStore.initBox(
+        gridSongBox=gridBoxStore.initBox(
+            'recommendSongGridBox',
             document.querySelectorAll('.song-name'),
             document.querySelectorAll('.song-singer'),
             document.querySelectorAll('.song-signature'),
             document.querySelectorAll('.song-submit-time'),
             document.querySelectorAll('.recommend-layout-song-grid-item-img')
+        );
+        gridSongListBox=gridBoxStore.initBox(
+            'recommendSongListGridBox',
+            document.querySelectorAll('.songList-name'),
+            document.querySelectorAll('.songList-creater'),
+            document.querySelectorAll('.songList-signature'),
+            null,
+            document.querySelectorAll('.songList-img')
         );
 
         let {songNames,
@@ -41,7 +51,17 @@ import{useGridBoxStore} from '../../../../stores/gridBoxStore'
             songSignatures,
             songSubmitTimes,
             songImgs} =gridBoxStore.test(20)
-        gridBox.gridBoxAddMessage(songNames,songSingers,songSignatures,songSubmitTimes,songImgs)
+            //songNames,songSingers,songSignatures,songSubmitTimes,songImgs
+        gridSongBox.gridBoxAddMessage(songNames,songSingers,songSignatures,songSubmitTimes,songImgs)
+
+        let songListTest =gridBoxStore.test(10)
+
+         gridSongListBox.gridBoxAddMessage(
+            songListTest.songNames,
+            songListTest.songSingers,
+            songListTest.songSignatures,
+            null,
+            songListTest.songImgs)
 
 
 
@@ -78,18 +98,22 @@ import{useGridBoxStore} from '../../../../stores/gridBoxStore'
             
         </div>
         
-        <div class="recommend-layout-song-middle "> 
+        <div class="recommend-layout-middle "> 
 
-            <span>歌曲<el-icon><DArrowRight /></el-icon></span>
-            <el-divider ></el-divider>
+            <div class="recommend-layout-middle-title"> 
+                    <span>歌曲<el-icon><DArrowRight /></el-icon></span>
+                    <el-divider ></el-divider>
+            </div>
+
             <div class="recommend-layout-song-grid grid-layout"> 
+                
                 <div class="recommend-layout-song-grid-item grid-layout-item">
                     <img class="recommend-layout-song-grid-item-img">
                     <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name">我是如此相信</div> 
-                            <div class="song-singer"> --陈奕迅 </div>
-                            <div class="song-signature"> 人生一世，静静听歌</div>
-                            <div class="song-submit-time"> 2024/9/12</div>
+                            <div class="song-name"></div> 
+                            <div class="song-singer"></div>
+                            <div class="song-signature"> </div>
+                            <div class="song-submit-time"></div>
                             
                     </div>
                 </div>
@@ -286,6 +310,105 @@ import{useGridBoxStore} from '../../../../stores/gridBoxStore'
                 </div>
             </div>
 
+            
+            <div class="recommend-layout-middle-title"> 
+                <span>歌单<el-icon><DArrowRight /></el-icon></span>
+                <el-divider ></el-divider>
+            </div>
+            <div class="grid-layout recommend-layout-songList-grid"> 
+                
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
+                    <img class="songList-img">
+                    <div class="recommend-layout-songList-grid-item-message"> 
+                        <div class="songList-name"> </div>
+                        <div class="songList-signature"> </div>
+                        <div class="songList-creater">    
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
         </div>
         
         

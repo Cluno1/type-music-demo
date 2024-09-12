@@ -17,6 +17,8 @@ const screenStore=useScreenStore()
 let htmlLayout=null
 
 
+
+
 let smQuery =null
 let mdQuery = null
 let lgQuery = null
@@ -41,12 +43,15 @@ function handleChange(){
   if(smQuery.matches){
     screenStore.screen.screen='phone'
     screenStore.screen.size='small'
+    
   }else if(mdQuery.matches){
     screenStore.screen.screen='tablet'
     screenStore.screen.size='default'
+    
   }else if(lgQuery.matches){
     screenStore.screen.screen='desktop'
     screenStore.screen.size='default'
+    
   }
 }
 
@@ -59,7 +64,7 @@ watch(()=>darkStore.dark,(newVal)=>{
     htmlLayout.style.backgroundColor='#f3bfe3'
 })
 
-let drawer=ref(true)
+
 
 </script>
 
@@ -76,8 +81,6 @@ let drawer=ref(true)
             <Aside />
           </div>
             
-          
-          
         </el-aside>
         <el-main ><Main/></el-main>
       </el-container>

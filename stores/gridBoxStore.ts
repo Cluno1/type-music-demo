@@ -10,22 +10,22 @@ export const useGridBoxStore = defineStore('gridBox', () => {
             songSignatures,
             songSubmitTimes,
             songImgs=null){
-                if(this.length==songNames.length){
+                if(this.length<=songNames.length){
                     this.songNames.forEach((element,index) => {
                         element.innerText=songNames[index]
                     });
-                    this.songSingers.forEach((element,index) => {
+                    this.songSingers?.forEach((element,index) => {
                         element.innerText=songSingers[index]
                     });
-                    this.songSignatures.forEach((element,index) => {
+                    this.songSignatures?.forEach((element,index) => {
                         element.innerText=songSignatures[index]
                     });
-                    this.songSubmitTimes.forEach((element,index) => {
+                    this.songSubmitTimes?.forEach((element,index) => {
                         element.innerText=songSubmitTimes[index]
                     });
                     if(songImgs){
                         let length=songImgs.length //传入的图片数量
-                        this.songImgs.forEach((element,index) => {
+                        this.songImgs?.forEach((element,index) => {
                             if(index<length)
                                 element.src=`${songImgs[index]}`
                             else
@@ -40,7 +40,7 @@ export const useGridBoxStore = defineStore('gridBox', () => {
         gridBoxAddImg(songImgs=null){
             if(songImgs){
                 let length=songImgs.length //传入的图片数量
-                this.songImgs.forEach((element,index) => {
+                this.songImgs?.forEach((element,index) => {
                     if(index<length)
                         element.src=`url('${songSignatures[index]}')`
                     else
@@ -48,10 +48,9 @@ export const useGridBoxStore = defineStore('gridBox', () => {
                 });
             }
         }
-
     }
-  
     type gridBox={
+        boxName:string,
         length:number,
         songImgs:Array<HTMLElement>,
         songNames:Array<HTMLElement>,
@@ -62,6 +61,7 @@ export const useGridBoxStore = defineStore('gridBox', () => {
     }
         //创建实例对象
     function initBox(
+        boxName,
         songNames,
         songSingers,
         songSignatures,
@@ -70,8 +70,9 @@ export const useGridBoxStore = defineStore('gridBox', () => {
     ):gridBox|null
     {
         let rGridBox:gridBox=null;
-        if(songNames.length==songSingers.length&&songSignatures.length==songSubmitTimes.length&&songImgs.length==songNames.length){
+        
             rGridBox={
+                boxName,
                 length:songNames.length,
                 songImgs,
                 songNames,
@@ -83,8 +84,8 @@ export const useGridBoxStore = defineStore('gridBox', () => {
             gridBoxes.data.push(rGridBox);
             gridBoxes.length++;
             return rGridBox;
-        }
-        return null
+        
+       
         
     }
 
@@ -100,7 +101,7 @@ export const useGridBoxStore = defineStore('gridBox', () => {
             songSingers.push('陈奕迅')
             songSignatures.push('人生一世，不如听歌')
             songSubmitTimes.push('2024/9/11')
-            songImgs.push('https://picsum.photos/420/360')
+            songImgs.push(`https://picsum.photos/420/360?random=${i}`)
         }
 
         return {
@@ -112,7 +113,8 @@ export const useGridBoxStore = defineStore('gridBox', () => {
         }
     }
     
-  
+
+
   const gridBoxes = reactive({
     length:0,
     data:[] as Array<{}>
