@@ -30,7 +30,7 @@ const screenStore=useScreenStore()
       </template>
       <el-menu-item-group>
         <!-- <template #title><span>Group One</span></template> -->
-        <el-menu-item index="explore" >探索</el-menu-item>
+        <el-menu-item index="recommend" >探索</el-menu-item>
         <el-menu-item index="find">发现</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>

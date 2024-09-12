@@ -1,4 +1,14 @@
+import { onMounted } from 'vue';
+import { useUSerStore } from './../../stores/userStore';
 import { createRouter, createWebHistory } from 'vue-router'
+
+let userStore=null
+
+
+  
+
+
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,7 +45,7 @@ const router = createRouter({
             component:  () => import("../components/home/explore/Singer.vue"),
           },
          
-        ]
+        ],
       },
       {
         path: '/find',
@@ -45,12 +55,36 @@ const router = createRouter({
       {
         path: '/userMessage',
         name: 'userMessage',
-        component: ()=> import('../components/user/UserMessage.vue')
+        component: ()=> import('../components/user/UserMessage.vue'),
+        beforeEnter:(to,from,next)=>{
+          userStore=useUSerStore();
+            if(userStore.userMessage.isLogin){
+              next()
+            }else{
+              if(confirm('当前尚未进行注册或者登录，是否需要现在进行登录？')){
+                next('/login')
+              }else{
+                next(from.path)
+              }
+            }
+        }
       },
       {
         path: '/dataAnalyze',
         name: 'dataAnalyze',
-        component: ()=> import('../components/user/DataAnalyze.vue')
+        component: ()=> import('../components/user/DataAnalyze.vue'),
+        beforeEnter:(to,from,next)=>{
+          userStore=useUSerStore();
+            if(userStore.userMessage.isLogin){
+              next()
+            }else{
+              if(confirm('当前尚未进行注册或者登录，是否需要现在进行登录？')){
+                next('/login')
+              }else{
+                next(from.path)
+              }
+            }
+        }
       },
       {
         path: '/login',
