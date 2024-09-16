@@ -5,11 +5,16 @@ import { useScreenStore } from '../../stores/screenStore';
 import {toggleDarkMode} from '../ts/Dark'
 import {input} from '../ts/Head'
 import { useDarkStore } from './../../stores/dark';
+import router from '../router';
+
 const store=useDarkStore()
 const screenStore=useScreenStore()
 
 const inputPlaceHolder=ref("搜索歌曲/歌手/歌单/电台")
 const darkButtonHolder=ref('default')
+
+const callCenter=()=>router.push('/call-center')
+const mail=()=>router.push('/mail')
 
 watch(()=>screenStore.screen.screen,(newVal)=>{
     if(newVal==='desktop'){
@@ -48,9 +53,9 @@ watch(()=>screenStore.screen.screen,(newVal)=>{
     
     <div class="head-layout-right"> 
         
-        <div class="head-layout-right-layout"><el-icon><Message /></el-icon><div>私信</div></div>
+        <div class="head-layout-right-layout" @click="mail"><el-icon><Message /></el-icon><div>私信</div></div>
         <div class="head-layout-right-layout"><el-icon><BellFilled /></el-icon><div>订阅</div></div>
-        <div class="head-layout-right-layout"><el-icon><Service /></el-icon><div>客服</div></div>
+        <div class="head-layout-right-layout" @click=callCenter ><el-icon><Service /></el-icon><div>客服</div></div>
         <div class="head-layout-right-layout"><el-icon><UserFilled /></el-icon><div>登录</div></div>
     </div>
  

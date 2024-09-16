@@ -96,6 +96,16 @@ const router = createRouter({
         name: 'sign',
         component: ()=> import('../components/user/Sign.vue')
       },
+      {
+        path:'/call-center',
+        name:'call-center',
+        component:()=> import('../components/CallCenter.vue')
+      },
+      {
+        path: '/mail',
+        name: 'mail',
+        component: ()=> import('../components/mail/Mail.vue')
+      },
       
      
      

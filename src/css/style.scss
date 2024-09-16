@@ -34,6 +34,29 @@ $breakpoint-lg: 1024px; // 大屏幕，如电脑
  
 }
 
+
+/* src/assets/styles/global.scss */
+::-webkit-scrollbar {
+  width: 0.5rem; /* 设置滚动条的宽度 */
+  height: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #b4b3b600; /* 设置滚动轨迹的背景颜色 */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f175ad35; /* 设置滚动滑块的背景颜色 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f175ad81; /* 设置滚动滑块的背景颜色 */
+}
+
+::-webkit-scrollbar-corner {
+  background: #f1f1f105; /* 设置角按钮的背景颜色 */
+}
+
 // 使用混合宏
 .example {
   background-color: red;
@@ -485,6 +508,103 @@ $breakpoint-lg: 1024px; // 大屏幕，如电脑
         }
       }
     }
+  }
+}
+
+//CallCenter.vue
+
+.call-center-layout{
+  
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title{
+    font-size: 2rem;
+  }
+  .call-center-layout-message{
+    
+    position: relative;
+    border-radius: 0.5rem;
+    width: 30rem;
+    height: 30rem;
+    background-color: #e2a3a349;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    .message-input-layout{
+      width: 100%;
+      justify-content: center;
+      position: absolute;
+      bottom: 1rem;
+      display: flex;
+      input{
+      width: 20rem;
+      height: 2rem;
+      border: none;
+      outline: none;
+      border-radius: 0.5rem;
+      padding: 0.2rem;
+      background-color: #ffffff41;
+      }
+
+      button{
+        width: 5rem;
+        margin-left: 1rem;
+        background-color: #f7b7b7;
+        border: none;
+        outline: none;
+        border-radius: 0.4rem;
+      }
+      button:hover{
+        
+        background-color: #b6abab;
+        
+      }
+
+    }
+
+    .call-center-layout-other-message-item{
+      
+      overflow:scroll;
+      width: 100%;
+      height: fit-content;
+      
+      padding: 0.3rem;
+      
+      border-radius: 0.5rem;
+      span{
+        // background-color: #b0a8cb17;
+        font-size: 1rem;
+        color: #1a1a1dc2;
+        
+      }
+    }
+    .call-center-layout-myself-message-item{
+      display: flex;
+      flex-direction: row-reverse;
+      overflow:scroll;
+      width: 100%;
+      height: fit-content;      
+      padding: 0.3rem;
+          
+      border-radius: 0.5rem;
+      span{
+        // background-color: #dbe6f50e;
+        font-size: 1rem;
+        color: #43fc0b92;      
+      }
+    }
+    .call-center-layout-other-message-item:hover{
+      background-color: #89838391;
+    }
+    .call-center-layout-myself-message-item:hover{
+      background-color: #89838391;
+    }
+    
+
+    
   }
 }
 
