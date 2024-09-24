@@ -5,10 +5,12 @@
 import { onMounted, ref, watch } from 'vue';
 import { useDarkStore } from '../stores/dark';
 import { useScreenStore } from '../stores/screenStore';
+
 import Aside from './components/Aside.vue';
 import Background from './components/background/Background.vue';
 import Head from './components/Head.vue';
 import Main from './components/Main.vue';
+import { useWebSocketStore } from '../stores/webSocketStore';
 
 
 const darkStore=useDarkStore()
@@ -16,6 +18,8 @@ const screenStore=useScreenStore()
 
 let htmlLayout=null
 
+let webSocketStore= useWebSocketStore()
+webSocketStore.initWebSocket()
 
 
 

@@ -6,6 +6,11 @@ import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css' // 引入黑暗模式样式
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
+
+//echarts
+import * as echarts from 'echarts';
+
+
 //全局定义css
 // import './css/style.css'
 import './css/style.scss'

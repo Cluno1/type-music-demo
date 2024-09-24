@@ -37,7 +37,7 @@ const router = createRouter({
           {
             path: '/radio',
             name: 'radio',
-            component:  () => import("../components/home/explore/Radio.vue"),
+            component:  () => import("../components/home/explore/radio/Radio.vue"),
           },
           {
             path: '/singer',
@@ -106,8 +106,12 @@ const router = createRouter({
         name: 'mail',
         component: ()=> import('../components/mail/Mail.vue')
       },
-      
-     
+      {
+        path: '/radio-live',
+        name: 'radioLive',
+        component:  () => import('../components/home/explore/radio/RadioLive.vue'),
+      },
+        
      
     ]
   })

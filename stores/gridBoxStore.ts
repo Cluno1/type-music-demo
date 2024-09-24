@@ -5,35 +5,42 @@ export const useGridBoxStore = defineStore('gridBox', () => {
 
     let gridBoxBase={
         gridBoxAddMessage(
-            songNames,
-            songSingers,
-            songSignatures,
-            songSubmitTimes,
-            songImgs=null){
-                if(this.length<=songNames.length){
+            songNames:Array<string>,
+            songSingers:Array<string>,
+            songSignatures:Array<string>,
+            songSubmitTimes:Array<string>,
+            songImgs:Array<string>|null=null){
+                
                     this.songNames.forEach((element,index) => {
+                        if(songNames.length>=index+1)
                         element.innerText=songNames[index]
                     });
                     this.songSingers?.forEach((element,index) => {
+                        if(songSingers.length>=index+1)
                         element.innerText=songSingers[index]
                     });
                     this.songSignatures?.forEach((element,index) => {
+                        if(songSignatures.length>=index+1)
                         element.innerText=songSignatures[index]
                     });
+                    
                     this.songSubmitTimes?.forEach((element,index) => {
+                        if(songSubmitTimes.length>=index+1)
                         element.innerText=songSubmitTimes[index]
                     });
+                    
+                    
                     if(songImgs){
                         let length=songImgs.length //传入的图片数量
                         this.songImgs?.forEach((element,index) => {
                             if(index<length)
                                 element.src=`${songImgs[index]}`
                             else
-                                element.src=`/src/assets/pictureHolder/${index%3}.png`
+                                element.src=`/src/assets/pictureHolder/${index%4}.png`
                         });
                     }
                     return true
-                }
+                
 
                 
         },
@@ -44,7 +51,7 @@ export const useGridBoxStore = defineStore('gridBox', () => {
                     if(index<length)
                         element.src=`url('${songSignatures[index]}')`
                     else
-                        element.src=`url('/src/assets/pictureHolder/${index%3}.png')`
+                        element.src=`url('/src/assets/pictureHolder/${index%4}.png')`
                 });
             }
         }
@@ -61,12 +68,12 @@ export const useGridBoxStore = defineStore('gridBox', () => {
     }
         //创建实例对象
     function initBox(
-        boxName,
-        songNames,
-        songSingers,
-        songSignatures,
-        songSubmitTimes,
-        songImgs
+        boxName:string,        
+        songNames:Array<HTMLElement>,
+        songSingers:Array<HTMLElement>,
+        songSignatures:Array<HTMLElement>,
+        songSubmitTimes:Array<HTMLElement>,
+        songImgs:Array<HTMLElement>,
     ):gridBox|null
     {
         let rGridBox:gridBox=null;
@@ -113,8 +120,6 @@ export const useGridBoxStore = defineStore('gridBox', () => {
         }
     }
     
-
-
   const gridBoxes = reactive({
     length:0,
     data:[] as Array<{}>
