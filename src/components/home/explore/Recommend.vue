@@ -1,420 +1,374 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import{useBoxStore} from '../../../../stores/boxStore'
 import{useGridBoxStore} from '../../../../stores/gridBoxStore'
     //推荐-歌曲-盒子
-    let boxItems=null;
-    let boxContainer=null;
-    let boxPointers=null;
-    let boxRight=null;
-    let boxLeft=null
-
-
     let boxStore=useBoxStore()
     let box=null;
     
-    let gridBoxStore=useGridBoxStore()
-    let gridSongBox=null
-    let gridSongListBox=null
-    
-    
 
     onMounted(()=>{
-        boxItems=document.querySelectorAll('.box-item')
-        boxContainer=document.querySelector('.box-container')
-        boxPointers=document.querySelectorAll('.box-pointer')
-        boxLeft=document.querySelector('.box-left')
-        boxRight=document.querySelector('.box-right')
-        box=boxStore.initBox(3000,6000,boxItems,boxContainer,boxPointers,boxLeft,boxRight);
+
+        box=boxStore.initBox(3000,6000,document.querySelectorAll('.box-item'),document.querySelector('.box-container'),document.querySelectorAll('.box-pointer'),document.querySelector('.box-left'),document.querySelector('.box-right'));
         box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png','https://picsum.photos/420/360?random=30','https://picsum.photos/420/360?random=90'])
         box.boxStart(box)
 
-        gridSongBox=gridBoxStore.initBox(
-            'recommendSongGridBox',
-            document.querySelectorAll('.song-name'),
-            document.querySelectorAll('.song-singer'),
-            document.querySelectorAll('.song-signature'),
-            document.querySelectorAll('.song-submit-time'),
-            document.querySelectorAll('.recommend-layout-song-grid-item-img')
-        );
-        gridSongListBox=gridBoxStore.initBox(
-            'recommendSongListGridBox',
-            document.querySelectorAll('.songList-name'),
-            document.querySelectorAll('.songList-creater'),
-            document.querySelectorAll('.songList-signature'),
-            null,
-            document.querySelectorAll('.songList-img')
-        );
-
-        let {songNames,
-            songSingers,
-            songSignatures,
-            songSubmitTimes,
-            songImgs} =gridBoxStore.test(20)
-            //songNames,songSingers,songSignatures,songSubmitTimes,songImgs
-        gridSongBox.gridBoxAddMessage(songNames,songSingers,songSignatures,songSubmitTimes,songImgs)
-
-        let songListTest =gridBoxStore.test(10)
-
-         gridSongListBox.gridBoxAddMessage(
-            songListTest.songNames,
-            songListTest.songSingers,
-            songListTest.songSignatures,
-            null,
-            songListTest.songImgs)
-
-
-
     })
+
+    interface Song {
+                songId:number,
+                songName:string,
+                songSinger:string,
+                songSignature:string,
+                songSubmitTime:string,
+                songImg:string,//url
+                songImgLoad:boolean
+            }
+
+const songs=ref([] as Song[])
+
+function testSongs(){
+    let random=0;
+    if(songs.value.length!=0){
+        random=songs.value.length
+    }
+    for(let i=0;i<10;i++){
+
+        let song={
+
+            songId:random,
+            songName:'达尔文',
+            songSinger:'蔡健雅',
+            songSignature:'好听，温柔',
+            songSubmitTime:'2024-9-26',
+            songImg:`https://picsum.photos/420/360?random=${random}`,//url
+            songImgLoad:false
+        }
+        songs.value.push(song)
+        random++
+    }
+}
+
+
+function handleScroll(event:Event){
+
+   const {target} = event
+
+   
+    if(target.scrollHeight-target.scrollTop<=(target.clientHeight)){
+        testSongs()
+    }
+}
+
+testSongs()
+//box test
+const bgStyle=ref<null|Song>(null)
+const boxSongs=ref([] as Song[])
+
+function initBoxMessage(){
+    
+    for(let i=0;i<2;i++){
+
+        let song={
+
+            songId:i,
+            songName:'达尔文',
+            songSinger:'蔡健雅',
+            songSignature:'好听，温柔',
+            songSubmitTime:'2024-9-26',
+            songImg:`https://picsum.photos/580/460?random=${i}`,//url
+            songImgLoad:false
+        };
+
+        boxSongs.value.push(song)
+        song={
+
+            songId:i+1,
+            songName:'人来人往',
+            songSinger:'陈奕迅',
+            songSignature:'好听，爱听，多来点',
+            songSubmitTime:'2024-9-27',
+            songImg:`https://picsum.photos/580/460?random=${i+1}`,//url
+            songImgLoad:false
+        };
+        boxSongs.value.push(song)
+        
+    }
+}
+
+function backgroundStyle(song:Song|null){
+   if(!song){
+    return;
+   }
+    return {
+        backgroundImage:`url(${song.songImg})`,
+        backgroundSize:'cover',
+    }
+}
+
+initBoxMessage()
+
+// const timer
+function decorateBox(){
+
+  function check(){
+    if(index>=boxSongs.value.length){
+        index=0
+    }else if(index<0){
+        index=boxSongs.value.length-1;
+    }
+  }
+  let index=0;
+  let timerId=null;
+  function boxChange(turn:null|number|'left'|'right'){
+    
+    clearTimeout(timerId)
+    let turnNull=0;
+    for(let i=0;i<boxSongs.value.length;i++){
+        if(boxSongs.value[i].songImgLoad){
+            turnNull=i+1;
+            boxSongs.value[i].songImgLoad=false
+        }
+
+    }
+  if(turn===null){
+    
+   index=turnNull;
+
+    check();
+    boxSongs.value[index].songImgLoad=true
+    timerId=setTimeout(()=>boxChange(null),3000)
+  }else if(turn==='left'){
+    
+    index--;
+    check();
+    boxSongs.value[index].songImgLoad=true
+    timerId=setTimeout(()=>boxChange(null),5000)
+  }else if(turn==='right'){
+    index++;
+    check();
+    boxSongs.value[index].songImgLoad=true
+    timerId=setTimeout(()=>boxChange(null),5000)
+  }else {
+    index=turn
+    check();
+    boxSongs.value[index].songImgLoad=true
+    timerId=setTimeout(()=>boxChange(null),5000)
+  }
+  bgStyle.value=boxSongs.value[index]
+  }
+return boxChange
+}
+
+const boxTurn=decorateBox()
+boxTurn(null)
+
 </script>
 
 <template>
     <div class="recommend-layout "> 
-        <div class="recommend-layout-song-show-box show-box"> 
-            <div class="box-button"> 
-                <div class="box-left"> 
-                    <el-icon><ArrowLeft /></el-icon>
-                </div>
-                <div class="box-right"> 
-                    <el-icon><ArrowRight /></el-icon>
-                </div>                
-            </div>
-            
-            <div class="box-container"> 
-                <div class="box-item"></div>
-                <div class="box-item"></div>
-                <div class="box-item"></div>
-                <div class="box-item"></div>
-                <div class="box-item"></div>
-            </div>
-
-            <div  class="box-pointers">
-                <span class="box-pointer"></span>
-                <span class="box-pointer"></span>
-                <span class="box-pointer"></span>
-                <span class="box-pointer"></span>
-                <span class="box-pointer"></span>
-            </div>
+       
+        <div class="box-layout" :style="backgroundStyle(bgStyle)"> 
+            <div class="color-blur" >
+    
+                <div class="box-box"> 
+                    <div class="box-button"> 
+                        <div class="box-left" @click="boxTurn('left')"> 
+                            <el-icon><ArrowLeft /></el-icon>
+                        </div>
+                        <div class="box-right" @click="boxTurn('right')"> 
+                            <el-icon><ArrowRight /></el-icon>
+                        </div>                
+                    </div>
+                    <div class="box-container"> 
+                        <div 
+                            class="box-img"
+                            v-for="song in boxSongs"
+                            :key="song.songId"
+                            :style="backgroundStyle(song)"
+                            v-show="song.songImgLoad"
+                        />
+                    </div>
+        <div  class="box-pointers">
+            <span 
+            class="box-pointer"
+            v-for="(song,index) in boxSongs"
+            :key="song.songId"
+            @click="boxTurn(index)"
+            />
             
         </div>
-        
-        <div class="recommend-layout-middle "> 
 
-            <div class="recommend-layout-middle-title"> 
-                    <span>歌曲<el-icon><DArrowRight /></el-icon></span>
-                    <el-divider ></el-divider>
+                </div>
+            
+                <div class="box-message" >
+    <div 
+   class="box-message-item" 
+   v-for="song in boxSongs"
+   :key="song.songId"
+   v-show="song.songImgLoad"
+   > 
+   {{ song.songName }}<br/>
+   {{ song.songSinger }}<br/>
+   {{ song.songSignature }}<br/>
+   {{ song.songSubmitTime }}<br/>
+   </div>
+                </div>
             </div>
+        </div>
+        
+        <div class="abc "  @scroll="handleScroll"> 
 
-            <div class="recommend-layout-song-grid grid-layout"> 
-                
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"></div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"></div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
+            <div 
+                class="abc-item "
+                v-for="(song) in songs"
+                :key="song.songId"  
+            >
+                    <img class="abc-item-img" 
+                    :src='song.songImg'
+                    @load='song.songImgLoad=true'
+                    v-show="song.songImgLoad"
+                    >
+                    <img src="/src/assets/pictureHolder/0.png" v-show="!song.songImgLoad">
+                    <div class="abc-item-songMessage"> 
+                            {{ song.songName }}<br/>
+                            {{ song.songSinger }}<br/>
+                            {{ song.songSignature }}<br/>
+                            {{ song.songSubmitTime }}<br/>
                             
                     </div>
                     
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-                <div class="recommend-layout-song-grid-item grid-layout-item">
-                    <img class="recommend-layout-song-grid-item-img">
-                    <div class="recommend-layout-song-grid-item-songMessage"> 
-                            <div class="song-name"></div> 
-                            <div class="song-singer"> </div>
-                            <div class="song-signature"> </div>
-                            <div class="song-submit-time"> </div>
-                            
-                    </div>
-                </div>
-            </div>
-
-            
-            <div class="recommend-layout-middle-title"> 
-                <span>歌单<el-icon><DArrowRight /></el-icon></span>
-                <el-divider ></el-divider>
-            </div>
-            <div class="grid-layout recommend-layout-songList-grid"> 
-                
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                <div class="grid-layout-item  recommend-layout-songList-grid-item ">
-                    <img class="songList-img">
-                    <div class="recommend-layout-songList-grid-item-message"> 
-                        <div class="songList-name"> </div>
-                        <div class="songList-signature"> </div>
-                        <div class="songList-creater">    
-                        </div>
-                    </div>
-                </div>
-                
             </div>
         </div>
         
-        
     </div>
+        
+       
+        
+        
+    
 </template>
 
 <style scoped  lang="scss">
+.recommend-layout{
+    display: flex;
     
+    flex-direction: column;
+    gap: 2rem;
+    .abc{
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(13rem,1fr));
+        overflow: scroll;
+        width: 100%;
+        height: 45rem;
+        
+        .abc-item{
+            width: 13rem;
+            height: 22rem;
+            img{
+                width: 13rem;
+                height: 12rem;
+            }
+            .abc-item-songMessage{
+               text-align: center;
+                
+            }
+        }
+        
+    }
+    .box-layout{
+         border-radius: 1rem;
+         overflow: hidden;
+         display:inline-block;
+         max-width: 60rem;
+         backdrop-filter: blur(100px);
+         background-position: center;
+
+         .color-blur{
+            background-color: #ffffff7b;
+            
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .box-box{
+                box-shadow:5px 5px 10px  2px rgba(38, 38, 66, 0.64);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+
+                overflow: hidden;
+                width: 30rem;
+                height: 20rem;
+                background-color: #d04e4e49;
+                .box-button{
+                     display: flex;
+                     justify-content: space-between;
+                     position: absolute;
+                     width: 100%;
+                     height: 100%;
+                     align-items: center;
+                     .box-left,.box-right{
+
+                       height: 100%;
+                       width: 10%;
+                       display: flex;
+                       align-items: center;
+                       justify-content: center;
+                       background-color: #638eaa0f;
+                       z-index: 1;
+                     }
+
+                     .box-left:hover,.box-right:hover{
+                       background-color: #638eaaa9;
+                     }
+                }
+                .box-pointers{
+               display: flex;
+               position: absolute;
+               bottom: 1rem;
+               justify-content: center;
+               align-items: center;
+               gap:1rem;
+               .box-pointer{
+                 width: 1rem;
+                 height: 1rem;
+                 background-color: #ffffff6e;
+                 border-radius: 50%;
+               }
+               .box-pointer:hover {
+                 background-color:  #fffffff8;
+                 border-radius: 40%;
+               }
+                }
+
+                .box-container{
+                    // overflow: hidden;
+                    width: 30rem;
+                    height: 20rem;
+                    display: flex;
+                    .box-img{
+                        width: 100%;
+                        height: 100%;
+
+                    }
+                
+                }
+            
+            }
+            .box-message{
+                width: 20rem;
+                height: auto;
+
+                .box-message-item{
+                  text-align: center;
+                }
+            }
+        }
+    }
+}
+
+
 </style>
