@@ -5,14 +5,16 @@
 import { onMounted, ref, watch } from 'vue';
 import { useDarkStore } from '../stores/dark';
 import { useScreenStore } from '../stores/screenStore';
-
+import { ElLoading } from 'element-plus'
 import Aside from './components/Aside.vue';
 import Background from './components/background/Background.vue';
 import Head from './components/Head.vue';
 import Main from './components/Main.vue';
 import { useWebSocketStore } from '../stores/webSocketStore';
+import AudioPlay from './components/AudioPlay.vue';
+import { useAudioStateStore}from '../stores/audioStateStore'
 
-
+const audioStateStore=useAudioStateStore()
 const darkStore=useDarkStore()
 const screenStore=useScreenStore()
 
@@ -68,7 +70,21 @@ watch(()=>darkStore.dark,(newVal)=>{
     htmlLayout.style.backgroundColor='#f3bfe3'
 })
 
+watch(()=>audioStateStore.playState.isShowList,(newVal)=>{
 
+  if(newVal)
+    loadingInstance=loading("Main");
+  else 
+    loadingInstance?.close()
+})
+
+let loadingInstance=null
+let loading=(target:string)=>{
+  const loadingInstance=ElLoading.service({
+    target:target
+  })
+  return loadingInstance
+}
 
 </script>
 
@@ -84,21 +100,34 @@ watch(()=>darkStore.dark,(newVal)=>{
           <div class="aside-box"> 
             <Aside />
           </div>
-            
         </el-aside>
         <el-main ><Main/></el-main>
       </el-container>
+      
+        
+      
     </el-container>
-
+    
+   
     
 
 </div>
 
+<div class="footer"> 
+      <AudioPlay/>
+</div>
 
 </template>
 
 <style scoped lang="scss">
-  
+  .footer {
+    position: fixed; 
+    bottom: 0;
+    left: 10rem; // 确保左侧对齐
+    width: 100%; // 确保宽度填满整个屏幕宽度
+    z-index: 2000; // 可选，如果你需要确保 footer 在其他内容之上
+  }
+
   .aside-box{
     position: fixed;
     top: 6rem;

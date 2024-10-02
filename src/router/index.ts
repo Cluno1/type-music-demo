@@ -111,6 +111,11 @@ const router = createRouter({
         name: 'radioLive',
         component:  () => import('../components/home/explore/radio/RadioLive.vue'),
       },
+      {
+        path: '/create',
+        name: 'create',
+        component: ()=> import('../components/create/Create.vue')
+      },
         
      
     ]

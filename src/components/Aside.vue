@@ -44,10 +44,10 @@ const screenStore=useScreenStore()
         <el-menu-item index="dataAnalyze">数据统计</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
-    <el-sub-menu index="submit">
+    <el-sub-menu index="create">
       <template #title>
         <el-icon><Lollipop /></el-icon>
-        <span>发布</span>
+        <span>创作</span>
       </template>
       <el-menu-item-group>
         <el-menu-item index="submit" >上传</el-menu-item>

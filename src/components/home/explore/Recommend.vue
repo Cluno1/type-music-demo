@@ -260,7 +260,7 @@ boxTurn(null)
         grid-template-columns: repeat(auto-fill,minmax(13rem,1fr));
         overflow: scroll;
         width: 100%;
-        height: 45rem;
+        height: 40rem;
         
         .abc-item{
             width: 13rem;
