@@ -13,6 +13,7 @@ import Main from './components/Main.vue';
 import { useWebSocketStore } from '../stores/webSocketStore';
 import AudioPlay from './components/AudioPlay.vue';
 import { useAudioStateStore}from '../stores/audioStateStore'
+import axios from 'axios';
 
 const audioStateStore=useAudioStateStore()
 const darkStore=useDarkStore()
@@ -85,6 +86,8 @@ let loading=(target:string)=>{
   })
   return loadingInstance
 }
+
+
 
 </script>
 

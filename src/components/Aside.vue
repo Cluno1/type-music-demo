@@ -3,8 +3,9 @@
 
 import { useScreenStore } from '../../stores/screenStore';
 import {isCollapse,selected} from '../ts/Aside'
+import { useI18n } from 'vue-i18n';
 
-
+const {t} =useI18n()
 const screenStore=useScreenStore()
 
 
@@ -26,37 +27,37 @@ const screenStore=useScreenStore()
     <el-sub-menu index="home">
       <template #title>
         <el-icon><Headset /></el-icon>
-        <span>主页</span>
+        <span>{{ t('message.aside.home') }}</span>
       </template>
       <el-menu-item-group>
         <!-- <template #title><span>Group One</span></template> -->
-        <el-menu-item index="recommend" >探索</el-menu-item>
-        <el-menu-item index="find">发现</el-menu-item>
+        <el-menu-item index="recommend" > {{ t('message.aside.explore') }}</el-menu-item>
+        <el-menu-item index="find">{{ t('message.aside.find') }}</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     <el-sub-menu index="user">
       <template #title >
           <el-icon><User /></el-icon>
-          <span>用户</span>
+          <span>{{ t('message.aside.user') }}</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="userMessage" >个人信息</el-menu-item>
-        <el-menu-item index="dataAnalyze">数据统计</el-menu-item>
+        <el-menu-item index="userMessage" >{{ t('message.aside.userMessage') }}</el-menu-item>
+        <el-menu-item index="dataAnalyze">{{ t('message.aside.dataAnalyze') }}</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     <el-sub-menu index="create">
       <template #title>
         <el-icon><Lollipop /></el-icon>
-        <span>创作</span>
+        <span>{{ t('message.aside.create') }}</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item index="submit" >上传</el-menu-item>
-        <el-menu-item index="create">创作</el-menu-item>
+        <el-menu-item index="submit" >{{ t('message.aside.submit') }}</el-menu-item>
+        <el-menu-item index="create">{{ t('message.aside.create') }}</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     <el-menu-item index="setting">
       <el-icon><Setting /></el-icon>
-      <template #title>设置</template>
+      <template #title>{{ t('message.aside.setting') }}</template>
     </el-menu-item>
   </el-menu>
 

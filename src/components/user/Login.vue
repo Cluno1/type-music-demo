@@ -1,13 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useScreenStore } from '../../../stores/screenStore';
 import { RouterLink } from 'vue-router';
+import { useCookieStore} from '../../../stores/cookieStore'
 
-const screenStore=useScreenStore()
+let cookieStore=useCookieStore()
 
+const userName=ref('')
+const password=ref('')
 
-const userName=ref(null)
-const password=ref(null)
+function login(){
+    
+    //后端验证,验证成功,token传入cookie
+    if(confirm('is successful?')){
+        //token 前后端唯一标识  后端根据token识别用户. 放在localStrorage
+        cookieStore.setCookie('userName',userName.value,30)
+        cookieStore.setCookie('password',password.value,30)
+    }
+    
+    
+}
 </script>
 
 <template>
@@ -26,16 +37,15 @@ const password=ref(null)
             <div> 登录</div>
 
             <div class="login-layout-input"> 
-
-                <input placeholder="账号/邮箱号" :value="userName"/>
+                <input placeholder="账号/邮箱号" v-model="userName"/>
             </div>
 
             <div class="login-layout-input">  
 
-                <input type="password" placeholder="密码" :value="password"/>
+                <input type="password" placeholder="密码" v-model="password"/>
             </div>
 
-            <button> 确认</button>
+            <button @click="login"> 确认</button>
         </div>
         
     </div>

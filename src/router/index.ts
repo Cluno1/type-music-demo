@@ -1,13 +1,10 @@
 import { onMounted } from 'vue';
 import { useUSerStore } from './../../stores/userStore';
+import { useCookieStore } from './../../stores/cookieStore';
 import { createRouter, createWebHistory } from 'vue-router'
 
 let userStore=null
-
-
-  
-
-
+let cookieStore=null
 
 
 const router = createRouter({
@@ -19,6 +16,11 @@ const router = createRouter({
         alias:'/',
         component:  () => import("../components/home/Explore.vue"),
         children:[
+          {
+            path: '/search',
+            name: 'search',
+            component:  () => import("../components/Search.vue"),
+          },
           {
             path: '/recommend',
             name: 'recommend',
@@ -56,18 +58,7 @@ const router = createRouter({
         path: '/userMessage',
         name: 'userMessage',
         component: ()=> import('../components/user/UserMessage.vue'),
-        beforeEnter:(to,from,next)=>{
-          userStore=useUSerStore();
-            if(userStore.userMessage.isLogin){
-              next()
-            }else{
-              if(confirm('当前尚未进行注册或者登录，是否需要现在进行登录？')){
-                next('/login')
-              }else{
-                next(from.path)
-              }
-            }
-        }
+        
       },
       {
         path: '/dataAnalyze',
@@ -121,4 +112,26 @@ const router = createRouter({
     ]
   })
   
+
+  router.beforeEach((to,from,next)=>{
+    userStore=useUSerStore()
+    cookieStore=useCookieStore()
+    if(!userStore.userMessage.isLogin){
+      let name=cookieStore.getCookie('userName')
+      let password=cookieStore.getCookie('password')
+      if(name!=null&&password!=null){
+          //后台验证
+          
+            userStore.userMessage.isLogin=true;
+            userStore.userMessage.message.userName=name
+            userStore.userMessage.message.userId=2
+          
+      }
+      
+      
+    }
+    next()
+      
+    
+  })
   export default router

@@ -3,12 +3,13 @@ import { defineStore } from 'pinia'
 
 export const useUSerStore = defineStore('userStore', () => {
   const userMessage = reactive({
-    isLogin:true,
+    isLogin:false,
     message:{
-      userName:'james',
-      userId:2,
+      userName:'',
+      userId:1,
 
-      signature:'人来人往，静静听歌',
+      img:'',
+      signature:'我是个性签名',
 
     }
   })
